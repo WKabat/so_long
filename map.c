@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/07 20:48:23 by wkabat            #+#    #+#             */
+/*   Updated: 2024/07/07 21:04:33 by wkabat           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -6,10 +18,29 @@
 #include <string.h>
 #include <errno.h>
 
-// typedef struct s_map
-// {
+int	count_lines(char *str)
+{
+	int	i;
+	int	line;
 
-// }							t_map;
+	i = 0;
+	line = 0;
+	
+	while (str[i])
+	{
+		if (str[i] == '\n' || str[i] == '\0')
+			line++;
+		i++;
+	}
+	return (line);
+}
+
+char **set_lines(char *buffer)
+{
+	char	**map;
+	int		lines;
+
+}
 
 char *fill_buffer(int fd)
 {
@@ -41,7 +72,8 @@ char	**map(char *filename)
 		return (NULL);
 	}
 	buffer = fill_buffer(fd);
-	return (buffer);
+
+	return (map);
 }
 
 int	main()
