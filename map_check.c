@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 10:54:11 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/09 14:27:40 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/09 14:57:42 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,8 @@ int	right_components(t_map_check *map)
 		return (0);
 	return (1);
 }
+
+// int	is_closed(t_map_check *map)
+// {
+	
+// }
