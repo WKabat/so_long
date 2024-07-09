@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:11:38 by wkabat            #+#    #+#             */
-/*   Updated: 2024/06/27 10:47:32 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/09 12:06:04 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # include <unistd.h>
 # include <string.h>
 # include <fcntl.h>
-# include "minilibx-linux/mlx.h"
-
-int	key_press(int keycode, void *param);
+# include <errno.h>
+# include <stddef.h>
+# include "minilibx/mlx.h"
+# include "minilibft/minilibft.h"
 
 typedef struct s_mlx
 {
@@ -31,4 +32,19 @@ typedef struct s_mlx
 	int		img_h;
 	int		cat;
 }				t_mlx;
+
+typedef struct s_map_check
+{
+	char	*map_buffer;
+	char	**map;
+	int		col;
+	int		rows;
+
+}				t_map_check;
+
+int		key_press(int keycode, void *param);
+int		valid_size(t_map_check *map);
+int	read_map(char *filename, t_map_check *map);
+int		check_map(t_map_check *map);
+
 #endif

@@ -6,84 +6,88 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:48:23 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/07 21:04:33 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/09 12:13:35 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include "minilibft/minilibft.h"
-#include <string.h>
-#include <errno.h>
+#include "so_long.h"
 
-int	count_lines(char *str)
+void	set_lines(t_map_check	*map)
 {
-	int	i;
-	int	line;
+	int			i;
 
 	i = 0;
-	line = 0;
-	
-	while (str[i])
+	map -> rows = 0;
+	while (map -> map_buffer[i])
 	{
-		if (str[i] == '\n' || str[i] == '\0')
-			line++;
+		if (map -> map_buffer[i] == '\n' || map -> map_buffer[i + 1] == '\0')
+			map -> rows++;
 		i++;
 	}
-	return (line);
+	map -> map = ft_split(map -> map_buffer, '\n');
 }
 
-char **set_lines(char *buffer)
+void	fill_buffer(int fd, t_map_check *map)
 {
-	char	**map;
-	int		lines;
+	char		*temp;
+	char		*line;
 
-}
-
-char *fill_buffer(int fd)
-{
-	char	*temp;
-	char	*buffer;
-	char	*line;
-
-	buffer = malloc(sizeof(char *));
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line)
 	{
-		temp = buffer;
-		buffer = ft_strjoin(temp, line);
-		free(temp);
+		temp = map -> map_buffer;
+		map -> map_buffer = ft_strjoin(temp, line);
 		free(line);
+		free(temp);
+		line = get_next_line(fd);
 	}
-	return (buffer);
 }
 
-char	**map(char *filename)
+int	read_map(char *filename, t_map_check *map)
 {
-	int		fd;
-	char	*buffer;
-	char	**map;
+	int			fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error opening file");
-		return (NULL);
+		return (0);
 	}
-	buffer = fill_buffer(fd);
-
-	return (map);
+	fill_buffer(fd, map);
+	set_lines(map);	
+	if (!check_map(map))
+	{
+		perror("Error\nMap is invalid!");
+		free (map -> map);
+		free (map -> map_buffer);
+		map -> map = NULL;
+		map -> map_buffer = NULL;
+		return (0);
+	}
+	return (1);
 }
 
-int	main()
+int	main(void)
 {
-	// char 	**map_result;
-	char	*buffer;
+	char		*buffer;
+	int			i;
+	t_map_check	map;
 
+	map.map_buffer = NULL;
+	map.map = NULL;
+	map.col = 0;
+	i = 0;
 	buffer = "map.ber";
-	// map_result = map(buffor);
-	// if (map_result != NULL && map_result[0] != NULL)
-		printf("%s\n", map(buffer));
+	read_map(buffer, &map);
+	if (!map.map)
+		return (0);
+	while (i < map.rows)
+	{
+		printf("%s\n", map.map[i]);
+		free(map.map[i]);
+		i++;
+	}
+	free(map.map);
+	free(map.map_buffer);
 	return (0);
 }

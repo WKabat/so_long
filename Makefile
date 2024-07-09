@@ -1,8 +1,8 @@
 SRC		= 	main \
 
 CC 		=	cc
-CFLAGS	=	-Wall -Wextra -Werror -g 
-AFLAGS	=	minilibx-linux/libmlx.a -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+CFLAGS	=	-Wall -Wextra -Werror -g --leak-check=full
+AFLAGS	=	minilibx/libmlx.a -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 NAME	=	so_long
 CFILES	=	$(SRC:%=%.c)
 OFILES	=	$(SRC:%=%.o)
