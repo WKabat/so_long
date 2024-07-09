@@ -6,31 +6,19 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 10:54:11 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/09 11:56:12 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/09 14:27:40 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	is_lines_equal(t_map_check *map);
-int	valid_size(t_map_check *map);
-
-int	check_map(t_map_check *map)
-{
-	if (!valid_size(map))
-		return (0);
-	if (!is_lines_equal(map))
-		return (0);
-	return (1);
-}
-
-int	valid_size(t_map_check *map)
+int	is_rectangular(t_map_check *map)
 {
 	int	i;
 
 	i = 0;
 	map -> col = 0;
-	while(map -> map_buffer[i] != '\n')
+	while (map -> buff[i] != '\n')
 	{
 		i++;
 		map -> col++;
@@ -47,12 +35,10 @@ int	is_lines_equal(t_map_check *map)
 
 	i = 0;
 	length = 0;
-	while (map -> map_buffer[i] != 0)
+	while (map -> buff[i] != 0)
 	{
-		if (map -> map_buffer[i] == '\n')
+		if (map -> buff[i] == '\n')
 		{
-			// printf("length: %i\n", length);
-			// printf("rows: %i\n", map -> col);
 			if (length != map -> col)
 				return (0);
 			length = 0;
@@ -61,5 +47,34 @@ int	is_lines_equal(t_map_check *map)
 		length++;
 		i++;
 	}
+	return (1);
+}
+
+int	right_components(t_map_check *map)
+{
+	t_comp	c;
+
+	c.i = 0;
+	c.c = 0;
+	c.e = 0;
+	c.p = 0;
+	c.com = "01CPE";
+	while (map -> buff[c.i] != 0)
+	{
+		if (ft_strchr(c.com, map->buff[c.i]) || map->buff[c.i] == '\n')
+		{
+			if (map -> buff[c.i] == 'E')
+				c.e++;
+			else if (map -> buff[c.i] == 'P')
+				c.p++;
+			else if (map -> buff[c.i] == 'C')
+				c.c++;
+		}
+		else if ((!ft_strchr(c.com, map->buff[c.i]) || map->buff[c.i] != '\n'))
+			return (0);
+		c.i++;
+	}
+	if (c.c < 1 || c.e != 1 || c.p != 1)
+		return (0);
 	return (1);
 }

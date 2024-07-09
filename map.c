@@ -6,11 +6,22 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:48:23 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/09 12:13:35 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/09 14:27:53 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	check_map(t_map_check *map)
+{
+	if (!is_rectangular(map))
+		return (0);
+	if (!is_lines_equal(map))
+		return (0);
+	if (!right_components(map))
+		return (0);
+	return (1);
+}
 
 void	set_lines(t_map_check	*map)
 {
@@ -18,13 +29,12 @@ void	set_lines(t_map_check	*map)
 
 	i = 0;
 	map -> rows = 0;
-	while (map -> map_buffer[i])
+	while (map -> buff[i])
 	{
-		if (map -> map_buffer[i] == '\n' || map -> map_buffer[i + 1] == '\0')
+		if (map -> buff[i] == '\n' || map -> buff[i + 1] == '\0')
 			map -> rows++;
 		i++;
 	}
-	map -> map = ft_split(map -> map_buffer, '\n');
 }
 
 void	fill_buffer(int fd, t_map_check *map)
@@ -35,8 +45,8 @@ void	fill_buffer(int fd, t_map_check *map)
 	line = get_next_line(fd);
 	while (line)
 	{
-		temp = map -> map_buffer;
-		map -> map_buffer = ft_strjoin(temp, line);
+		temp = map -> buff;
+		map -> buff = ft_strjoin(temp, line);
 		free(line);
 		free(temp);
 		line = get_next_line(fd);
@@ -54,31 +64,30 @@ int	read_map(char *filename, t_map_check *map)
 		return (0);
 	}
 	fill_buffer(fd, map);
-	set_lines(map);	
+	set_lines(map);
 	if (!check_map(map))
 	{
 		perror("Error\nMap is invalid!");
-		free (map -> map);
-		free (map -> map_buffer);
-		map -> map = NULL;
-		map -> map_buffer = NULL;
+		free (map -> buff);
+		map -> buff = NULL;
 		return (0);
 	}
+	map -> map = ft_split(map -> buff, '\n');
 	return (1);
 }
 
 int	main(void)
 {
-	char		*buffer;
+	char		*buff;
 	int			i;
 	t_map_check	map;
 
-	map.map_buffer = NULL;
+	map.buff = NULL;
 	map.map = NULL;
 	map.col = 0;
 	i = 0;
-	buffer = "map.ber";
-	read_map(buffer, &map);
+	buff = "map.ber";
+	read_map(buff, &map);
 	if (!map.map)
 		return (0);
 	while (i < map.rows)
@@ -88,6 +97,6 @@ int	main(void)
 		i++;
 	}
 	free(map.map);
-	free(map.map_buffer);
+	free(map.buff);
 	return (0);
 }

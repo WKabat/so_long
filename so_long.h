@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:11:38 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/09 12:06:04 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/09 14:27:33 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 # include "minilibx/mlx.h"
 # include "minilibft/minilibft.h"
 
+typedef struct s_com
+{
+	int		e;
+	int		p;
+	int		c;
+	int		i;
+	char	*com;
+}				t_comp;
+
+
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -35,7 +45,7 @@ typedef struct s_mlx
 
 typedef struct s_map_check
 {
-	char	*map_buffer;
+	char	*buff;
 	char	**map;
 	int		col;
 	int		rows;
@@ -43,8 +53,13 @@ typedef struct s_map_check
 }				t_map_check;
 
 int		key_press(int keycode, void *param);
-int		valid_size(t_map_check *map);
-int	read_map(char *filename, t_map_check *map);
+int		is_rectangular(t_map_check *map);
+int		read_map(char *filename, t_map_check *map);
 int		check_map(t_map_check *map);
+int		is_lines_equal(t_map_check *map);
+void	set_lines(t_map_check	*map);
+void	fill_buffer(int fd, t_map_check *map);
+int		right_components(t_map_check *map);
+
 
 #endif
