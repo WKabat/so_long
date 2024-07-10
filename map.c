@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:48:23 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/09 14:58:34 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:20:17 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,21 @@
 
 int	check_map(t_map_check *map)
 {
-	if (!is_rectangular(map))
+	if ((!is_rectangular(map)) || (!is_lines_equal(map)) || (!right_comp(map)))
+	{
+		errno = 1;
+		perror("Error\nMap is invalid!");
 		return (0);
-	if (!is_lines_equal(map))
-		return (0);
-	if (!right_components(map))
-		return (0);
+	}
+	if (map->map != NULL)
+	{
+		if (!is_closed(map))
+		{
+			errno = EINVAL;
+			perror("Error\nMap is invalid!");
+			return (0);
+		}
+	}
 	return (1);
 }
 
@@ -65,14 +74,12 @@ int	read_map(char *filename, t_map_check *map)
 	}
 	fill_buffer(fd, map);
 	set_lines(map);
+	map -> map = ft_split(map -> buff, '\n');
 	if (!check_map(map))
 	{
-		perror("Error\nMap is invalid!");
-		free (map -> buff);
-		map -> buff = NULL;
+		free_space(map);
 		return (0);
 	}
-	map -> map = ft_split(map -> buff, '\n');
 	return (1);
 }
 
