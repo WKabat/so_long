@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:11:38 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/10 12:58:29 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/11 16:41:37 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,16 @@ typedef struct s_map_check
 	int		rows;
 
 }				t_map_check;
+
+typedef struct s_path
+{
+	char	**start;
+	int		c;
+	int	x;
+	int	y;
+	int	c;
+}				t_path;
+
 
 int		key_press(int keycode, void *param);
 void	free_space(t_map_check *map);
