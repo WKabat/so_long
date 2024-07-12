@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:48:23 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/10 16:20:17 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/12 11:55:27 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	read_map(char *filename, t_map_check *map)
 		free_space(map);
 		return (0);
 	}
+	find_start(map);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:11:38 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/11 16:41:37 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/12 14:31:28 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_com
 	char	*com;
 }				t_comp;
 
-
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -52,15 +51,13 @@ typedef struct s_map_check
 
 }				t_map_check;
 
-typedef struct s_path
-{
-	char	**start;
-	int		c;
-	int	x;
-	int	y;
-	int	c;
-}				t_path;
-
+// typedef struct s_path
+// {
+// 	char	**start;
+// 	int		c;
+// 	int		x;
+// 	int		y;
+// }				t_path;
 
 int		key_press(int keycode, void *param);
 void	free_space(t_map_check *map);
@@ -72,5 +69,8 @@ void	set_lines(t_map_check	*map);
 void	fill_buffer(int fd, t_map_check *map);
 int		right_comp(t_map_check *map);
 int		is_closed(t_map_check *map);
+int		count_collectibles(t_map_check *map);
+void	find_start(t_map_check *map);
+void	flood_fill(t_map_check *map, int x, int y, int c);
 
 #endif
