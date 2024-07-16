@@ -6,17 +6,17 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:48:23 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/12 11:55:27 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/15 16:38:28 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_map(t_map_check *map)
+int	check_map(t_map_check *map, t_comp *c)
 {
-	if ((!is_rectangular(map)) || (!is_lines_equal(map)) || (!right_comp(map)))
+	if ((!is_rectangular(map)) || (!is_lines_equal(map)) || (!right_comp(map, c)))
 	{
-		errno = 1;
+		errno = 5;
 		perror("Error\nMap is invalid!");
 		return (0);
 	}
@@ -62,7 +62,7 @@ void	fill_buffer(int fd, t_map_check *map)
 	}
 }
 
-int	read_map(char *filename, t_map_check *map)
+int	read_map(char *filename, t_map_check *map, t_comp *c)
 {
 	int			fd;
 
@@ -75,12 +75,19 @@ int	read_map(char *filename, t_map_check *map)
 	fill_buffer(fd, map);
 	set_lines(map);
 	map -> map = ft_split(map -> buff, '\n');
-	if (!check_map(map))
+	if (!check_map(map, c))
 	{
 		free_space(map);
 		return (0);
 	}
 	find_start(map);
+	if (!valid_path(map, c))
+	{
+		errno = 5;
+		perror("Error\nThere is no valid path!");
+		free_space(map);
+		return (0);
+	}
 	return (1);
 }
 
@@ -89,13 +96,14 @@ int	main(void)
 	char		*buff;
 	int			i;
 	t_map_check	map;
+	t_comp c;
 
 	map.buff = NULL;
 	map.map = NULL;
 	map.col = 0;
 	i = 0;
-	buff = "map.ber";
-	read_map(buff, &map);
+	buff = "maps/map.ber";
+	read_map(buff, &map, &c);
 	if (!map.map)
 		return (0);
 	while (i < map.rows)

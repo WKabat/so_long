@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 10:54:11 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/10 18:10:44 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/15 16:26:27 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,30 @@ int	is_lines_equal(t_map_check *map)
 	return (1);
 }
 
-int	right_comp(t_map_check *map)
+int	right_comp(t_map_check *map, t_comp *c)
 {
-	t_comp	c;
-
-	c.i = 0;
-	c.c = 0;
-	c.e = 0;
-	c.p = 0;
-	c.com = "01CPE";
-	while (map -> buff[c.i] != 0)
+	c->i = 0;
+	c->c = 0;
+	c->e = 0;
+	c->p = 0;
+	c->com = "01CPE";
+	while (map -> buff[c->i] != 0)
 	{
-		if (ft_strchr(c.com, map->buff[c.i]) || map->buff[c.i] == '\n')
+		if (ft_strchr(c->com, map->buff[c->i]) || map->buff[c->i] == '\n')
 		{
-			if (map -> buff[c.i] == 'E')
-				c.e++;
-			else if (map -> buff[c.i] == 'P')
-				c.p++;
-			else if (map -> buff[c.i] == 'C')
-				c.c++;
+			if (map -> buff[c->i] == 'E')
+				c->e++;
+			else if (map -> buff[c->i] == 'P')
+				c->p++;
+			else if (map -> buff[c->i] == 'C')
+				c->c++;
 		}
-		else if ((!ft_strchr(c.com, map->buff[c.i]) || map->buff[c.i] != '\n'))
+		else if ((!ft_strchr(c->com, map->buff[c->i])
+				|| map->buff[c->i] != '\n'))
 			return (0);
-		c.i++;
+		c->i++;
 	}
-	if (c.c < 1 || c.e != 1 || c.p != 1)
+	if (c->c < 1 || c->e != 1 || c->p != 1)
 		return (0);
 	return (1);
 }
@@ -105,4 +104,3 @@ int	is_closed(t_map_check *map)
 	}
 	return (1);
 }
-

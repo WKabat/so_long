@@ -6,21 +6,20 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:11:51 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/12 14:48:41 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/15 16:32:58 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	count_collectibles(t_map_check *map)
+void	count_collectibles(t_map_check *map)
 {
 	int	x;
 	int	y;
-	int	c;
 
 	x = 0;
 	y = 0;
-	c = 0;
+	map->collectibles = 0;
 	while (map->map[x][y])
 	{
 		if (map->map[x][y + 1] == 0)
@@ -31,21 +30,18 @@ int	count_collectibles(t_map_check *map)
 				break ;
 		}
 		if (map->map[x][y] == 'C')
-			c++;
+			map->collectibles++;
 		y++;
 	}
-	return (c);
 }
 
 void	find_start(t_map_check *map)
 {
 	int	x;
 	int	y;
-	int	c;
 
 	x = 0;
 	y = 0;
-	c = count_collectibles(map);
 	while (map->map[x][y])
 	{
 		if (map->map[x][y + 1] == 0)
@@ -56,36 +52,61 @@ void	find_start(t_map_check *map)
 				break ;
 		}
 		if (map->map[x][y] == 'P')
-			flood_fill(map, x, y, c);
+		{
+			flood_fill(map, x, y);
+			break ;		
+		}
 		y++;
 	}
 }
 
-void	flood_fill(t_map_check *map, int x, int y, int c)
+void	flood_fill(t_map_check *map, int x, int y)
 {
 	char	*target;
 	char	wall;
-	int		exit;
 
 	wall = '1';
-	exit = 0;
 	target = "0CPE";
 	if (map->map[x][y] == wall || map->map[x][y] == 'o')
 		return ;
 	if (!ft_strchr(target, map->map[x][y]))
 		return ;
 	if (map->map[x][y] == 'P' || map->map[x][y] == 'C' || map->map[x][y] == 'E')
-	{
-		if (map->map[x][y] == 'C')
-			c--;
-		if (map->map[x][y] == 'E')
-			exit++;
 		map->map[x][y] += 32;
-	}
 	else
 		map->map[x][y] = 'o';
-	flood_fill(map, x + 1, y, c);
-	flood_fill(map, x - 1, y, c);
-	flood_fill(map, x, y + 1, c);
-	flood_fill(map, x, y - 1, c);
+	flood_fill(map, x + 1, y);
+	flood_fill(map, x - 1, y);
+	flood_fill(map, x, y + 1);
+	flood_fill(map, x, y - 1);
+}
+
+int	valid_path(t_map_check *map, t_comp *c)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	// printf("c: %i, e: %i, p: %i\n", c->c, c->e, c->p);
+	while (map->map[x][y])
+	{
+		if (map->map[x][y] == 'e')
+			c->e--;
+		if (map->map[x][y] == 'c')
+			c->c--;
+		if (map->map[x][y] == 'p')
+			c->p--;
+		if (map->map[x][y + 1] == 0)
+		{
+			y = 0;
+			x++;
+			if (!map->map[x])
+				break ;
+		}
+		y++;
+	}
+	if (c->p != 0 || c->e != 0 || c->c != 0)
+		return (0);
+	return (1);
 }
