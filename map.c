@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:48:23 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/15 16:38:28 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/16 12:21:46 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	check_map(t_map_check *map, t_comp *c)
 {
-	if ((!is_rectangular(map)) || (!is_lines_equal(map)) || (!right_comp(map, c)))
+	if ((!is_rectangular(map)) || (!is_lines_equal(map))
+		|| (!right_comp(map, c)))
 	{
 		errno = 5;
 		perror("Error\nMap is invalid!");
@@ -25,7 +26,7 @@ int	check_map(t_map_check *map, t_comp *c)
 		if (!is_closed(map))
 		{
 			errno = EINVAL;
-			perror("Error\nMap is invalid!");
+			perror("Error\nMap is not closed!");
 			return (0);
 		}
 	}
@@ -91,28 +92,28 @@ int	read_map(char *filename, t_map_check *map, t_comp *c)
 	return (1);
 }
 
-int	main(void)
-{
-	char		*buff;
-	int			i;
-	t_map_check	map;
-	t_comp c;
+// int	main(void)
+// {
+// 	char		*buff;
+// 	int			i;
+// 	t_map_check	map;
+// 	t_comp		c;
 
-	map.buff = NULL;
-	map.map = NULL;
-	map.col = 0;
-	i = 0;
-	buff = "maps/map.ber";
-	read_map(buff, &map, &c);
-	if (!map.map)
-		return (0);
-	while (i < map.rows)
-	{
-		printf("%s\n", map.map[i]);
-		free(map.map[i]);
-		i++;
-	}
-	free(map.map);
-	free(map.buff);
-	return (0);
-}
+// 	map.buff = NULL;
+// 	map.map = NULL;
+// 	map.col = 0;
+// 	i = 0;
+// 	buff = "maps/map.ber";
+// 	read_map(buff, &map, &c);
+// 	if (!map.map)
+// 		return (0);
+// 	while (i < map.rows)
+// 	{
+// 		printf("%s\n", map.map[i]);
+// 		free(map.map[i]);
+// 		i++;
+// 	}
+// 	free(map.map);
+// 	free(map.buff);
+// 	return (0);
+// }

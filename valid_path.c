@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:11:51 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/15 16:32:58 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/16 09:51:39 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	find_start(t_map_check *map)
 		if (map->map[x][y] == 'P')
 		{
 			flood_fill(map, x, y);
-			break ;		
+			break ;
 		}
 		y++;
 	}
@@ -88,7 +88,6 @@ int	valid_path(t_map_check *map, t_comp *c)
 
 	x = 0;
 	y = 0;
-	// printf("c: %i, e: %i, p: %i\n", c->c, c->e, c->p);
 	while (map->map[x][y])
 	{
 		if (map->map[x][y] == 'e')
