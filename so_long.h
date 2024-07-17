@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:11:38 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/16 17:32:01 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/17 19:29:20 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "minilibx/mlx.h"
 # include "minilibft/minilibft.h"
 # include <X11/keysymdef.h>
+
 
 typedef struct s_comp
 {
@@ -69,6 +70,9 @@ typedef struct s_mlx
 	int		sprite_x;
 	int		sprite_y;
 	int		tile_size;
+	int		move;
+	int		ex_x;
+	int		ex_y;
 }				t_mlx;
 
 typedef struct s_map_check
@@ -81,7 +85,13 @@ typedef struct s_map_check
 
 }				t_map_check;
 
-int		key_press(int keycode, t_mlx *mlx);
+typedef struct s_game
+{
+	t_map_check *map;
+	t_mlx		*mlx;
+}				t_game;
+
+int		key_press(int keycode, t_game *game);
 void	free_space(t_map_check *map);
 int		is_rectangular(t_map_check *map);
 int		read_map(char *filename, t_map_check *map, t_comp *c);
@@ -98,5 +108,9 @@ int		valid_path(t_map_check *map, t_comp *c);
 int		cross_clicked(t_mlx *mlx);
 void	window_size(t_mlx *mlx, t_map_check *map);
 void	draw_map(t_mlx *mlx, t_map_check *map);
+void	get_sprite_position(t_map_check *map, t_mlx *mlx);
+void	sprite_move(int keycode, t_map_check *map, t_mlx *mlx);
+int		check_tale(t_map_check *map, t_mlx *mlx,int prev_x,int prev_y);
+void	check_keycode(int keycode, t_mlx *mlx);
 
 #endif

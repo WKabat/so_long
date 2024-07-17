@@ -6,31 +6,45 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 11:02:36 by wkabat            #+#    #+#             */
-/*   Updated: 2024/06/27 10:47:21 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/17 19:56:59 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	key_press(int keycode, void *param)
-{
-	(void)param;
-	if (keycode == 65307)
-		exit (0);
-	return (0);
-}
-
 int	main(void)
 {
 	t_mlx		mlx;
-	char		*param;
+	t_map_check map;
+	t_comp		c;
+	t_game		game;
 
-	param = NULL;
-	mlx.path = "./xpm/cat.xpm";
+	mlx.move = 0;
+	game.map = &map;
+	game.mlx = &mlx;
+	map.buff = NULL;
+	map.map = NULL;
+	map.col = 0;
+	mlx.sprite_img_path = "./xpm/sprite.xpm";
+	mlx.wall_img_path = "./xpm/wall.xpm";
+	mlx.collect_img_path = "./xpm/coin.xpm";
+	mlx.exit_img_path = "./xpm/exit.xpm";
+	mlx.back_img_path = "./xpm/back.xpm";
 	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 1000, 600, "so_long");
-	mlx.img = mlx_xpm_file_to_image(mlx.mlx, mlx.path, &mlx.img_w, &mlx.img_h);
-	mlx.cat = mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img, 450, 300);
-	mlx_key_hook(mlx.win, key_press, param);
+	read_map("./maps/map.ber", &map, &c);
+	count_collectibles(&map);
+	window_size(&mlx, &map);
+	mlx.win = mlx_new_window(mlx.mlx, mlx.screen_x, mlx.screen_y, "so_long");
+	mlx.sprite_img = mlx_xpm_file_to_image(mlx.mlx, mlx.sprite_img_path, &mlx.sprite_img_w, &mlx.sprite_img_h);
+	mlx.wall_img = mlx_xpm_file_to_image(mlx.mlx, mlx.wall_img_path, &mlx.wall_img_w, &mlx.wall_img_h);
+	mlx.collect_img = mlx_xpm_file_to_image(mlx.mlx, mlx.collect_img_path, &mlx.collect_img_w, &mlx.collect_img_h);
+	mlx.back_img = mlx_xpm_file_to_image(mlx.mlx, mlx.back_img_path, &mlx.back_img_w, &mlx.back_img_h);
+	mlx.collect_img = mlx_xpm_file_to_image(mlx.mlx, mlx.collect_img_path, &mlx.collect_img_w, &mlx.collect_img_h);
+	mlx.exit_img = mlx_xpm_file_to_image(mlx.mlx, mlx.exit_img_path, &mlx.exit_img_w, &mlx.exit_img_h);
+	get_sprite_position(&map, &mlx);
+	draw_map(&mlx, &map);
+	mlx_key_hook(mlx.win, key_press, &game);
+	mlx_hook(mlx.win, 17, 1l<<17,cross_clicked, &mlx);
 	mlx_loop(mlx.mlx);
+	// free_space(&map);
 }

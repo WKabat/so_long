@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:11:51 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/16 09:51:39 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/17 17:50:25 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	count_collectibles(t_map_check *map)
 			if (!map->map[x])
 				break ;
 		}
-		if (map->map[x][y] == 'C')
+		if (map->map[x][y] == 'c')
 			map->collectibles++;
 		y++;
 	}
