@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 11:02:36 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/17 19:56:59 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/18 17:04:39 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(void)
 	map.buff = NULL;
 	map.map = NULL;
 	map.col = 0;
+	mlx.victory = 0;
 	mlx.sprite_img_path = "./xpm/sprite.xpm";
 	mlx.wall_img_path = "./xpm/wall.xpm";
 	mlx.collect_img_path = "./xpm/coin.xpm";
