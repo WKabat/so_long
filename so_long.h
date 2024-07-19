@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:11:38 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/19 13:18:30 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/19 15:59:26 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	get_sprite_position(t_map_check *map, t_mlx *mlx);
 void	sprite_move(int keycode, t_map_check *map, t_mlx *mlx);
 int		check_tale(t_map_check *map, t_mlx *mlx, int prev_x, int prev_y);
 void	check_keycode(int keycode, t_mlx *mlx);
-// int		end_game(t_map_check *map);
+void	tiles(t_mlx *mlx, t_map_check *map, int x, int y);
+void	end_game(t_mlx *mlx, t_map_check *map);
 
 #endif

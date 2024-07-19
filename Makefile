@@ -4,6 +4,8 @@ SRC		= 	main \
 			map_check \
 			so_long_utils \
 			valid_path \
+			draw_map \
+			tale_check \
 
 CC 		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -g

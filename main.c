@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 11:02:36 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/19 13:51:16 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/19 15:50:37 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(void)
 	mlx.exit_img_path = "./xpm/exit.xpm";
 	mlx.back_img_path = "./xpm/back.xpm";
 	mlx.mlx = mlx_init();
-	read_map("./maps/medium_map.ber", &map, &c);
+	read_map("./maps/small_map.ber", &map, &c);
 	count_collectibles(&map);
 	window_size(&mlx, &map);
 	mlx.win = mlx_new_window(mlx.mlx, mlx.screen_x, mlx.screen_y, "so_long");
