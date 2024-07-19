@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:22:03 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/18 15:26:13 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/19 12:52:50 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,8 @@ int	check_tale(t_map_check *map, t_mlx *mlx,int prev_x,int prev_y)
 	{
 		map->map[mlx->sprite_y][mlx->sprite_x] = 'p';
 		map->map[prev_x][prev_y] = 'o';
+		ft_printf("Victory!\n");
+		mlx_loop_end(mlx->mlx);
 	}
 	else
 		map->map[prev_x][prev_y] = 'o';
@@ -202,9 +204,6 @@ int	key_press(int keycode, t_game *game)
 		sprite_move(keycode, game->map, game->mlx);
 	if (end_game(game->map) && game->map->collectibles == 0)
 	{
-		ft_printf("Victory!\n");
-		// sleep(2);
-		mlx_loop_end(game->mlx->mlx);
 	}
 	return (0);
 }
