@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:22:03 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/19 12:52:50 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/19 13:50:25 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,26 +129,14 @@ void	check_keycode(int keycode, t_mlx *mlx)
 			mlx->sprite_y++;
 	}
 }
-int	end_game(t_map_check *map)
+
+void	end_game(t_mlx *mlx, t_map_check *map)
 {
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (map->map[x] != NULL)
+	if (mlx->sprite_y == mlx->ex_x && mlx->sprite_x == mlx->ex_y && map->collectibles == 0)
 	{
-		y = 0;
-		while (map->map[x][y] != '\0')
-		{
-			if (map->map[x][y] == 'e' && map->collectibles == 0)
-				return (0);
-			y++;
-		}
-		x++;
+		ft_printf("Victory!\n");
+		mlx_loop_end(mlx->mlx);
 	}
-
-	return (1);
 }
 
 int	check_tale(t_map_check *map, t_mlx *mlx,int prev_x,int prev_y)
@@ -166,8 +154,6 @@ int	check_tale(t_map_check *map, t_mlx *mlx,int prev_x,int prev_y)
 	{
 		map->map[mlx->sprite_y][mlx->sprite_x] = 'p';
 		map->map[prev_x][prev_y] = 'o';
-		ft_printf("Victory!\n");
-		mlx_loop_end(mlx->mlx);
 	}
 	else
 		map->map[prev_x][prev_y] = 'o';
@@ -189,10 +175,11 @@ void	sprite_move(int keycode, t_map_check *map, t_mlx *mlx)
 		mlx->sprite_x = prev_y;
 	}
 	draw_map(mlx, map);
-	if (mlx->sprite_y != prev_x || mlx->sprite_x != prev_y)
+	if ((mlx->sprite_y != prev_x || mlx->sprite_x != prev_y))
 	{
 		mlx->move++;
 		ft_printf("Move: %i\n", mlx->move);
+		end_game(mlx, map);
 	}
 }
 
@@ -202,9 +189,6 @@ int	key_press(int keycode, t_game *game)
 		exit (0);
 	else if (keycode != 65307)
 		sprite_move(keycode, game->map, game->mlx);
-	if (end_game(game->map) && game->map->collectibles == 0)
-	{
-	}
 	return (0);
 }
 

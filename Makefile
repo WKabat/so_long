@@ -20,6 +20,7 @@ reset=\033[0m
 # Rule to create library
 $(NAME): $(OFILES)
 		make -C minilibft
+		make -C minilibx
 		$(CC) $(CFLAGS) $(OFILES) $(AFLAGS) -o $(NAME)
 		@echo "$(green)$(NAME) built successfully.$(reset)"
 
@@ -34,6 +35,7 @@ clean:
 
 # Rule to clean everything
 fclean: clean
+		@make clean -C minilibx
 		@make fclean -C minilibft
 		rm -f $(NAME)
 		@echo "$(green)$(NAME) cleaned.$(reset)"
