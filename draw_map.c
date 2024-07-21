@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:57:05 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/19 16:03:49 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/21 21:39:37 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,14 @@ void	window_size(t_mlx *mlx, t_map_check *map)
 {
 	int	x;
 	int	y;
-	int	len;
 
 	x = 0;
-	len = 0;
 	mlx->tile_size = 32;
 	while (map->map[x] != NULL)
 	{
 		y = 0;
 		if (map->map[0][y] != 0)
-		{
-			len++;
 			y++;
-		}
 		while (map->map[x][y] != '\0')
 			y++;
 		x++;

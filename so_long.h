@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:11:38 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/19 15:59:26 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/20 01:21:06 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stddef.h>
 # include "minilibx/mlx.h"
 # include "minilibft/minilibft.h"
-# include <X11/keysymdef.h>
+// # include <X11/keysymdef.h>
 
 typedef struct s_comp
 {

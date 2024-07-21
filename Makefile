@@ -1,11 +1,11 @@
 #	Variables
 SRC		= 	main \
-			map \
-			map_check \
-			so_long_utils \
-			valid_path \
-			draw_map \
-			tale_check \
+						map \
+						map_check \
+						so_long_utils \
+						valid_path \
+						draw_map \
+						tale_check \
 
 CC 		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -g
@@ -20,9 +20,13 @@ reset=\033[0m
 		$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 # Rule to create library
-$(NAME): $(OFILES)
+minilibft/minilibft.a:
 		make -C minilibft
+		
+minilibx/libmlx.a:
 		make -C minilibx
+
+$(NAME): $(OFILES) minilibft/minilibft.a minilibx/libmlx.a
 		$(CC) $(CFLAGS) $(OFILES) $(AFLAGS) -o $(NAME)
 		@echo "$(green)$(NAME) built successfully.$(reset)"
 
