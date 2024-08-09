@@ -6,7 +6,7 @@
 /*   By: wkabat <wkabat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:11:38 by wkabat            #+#    #+#             */
-/*   Updated: 2024/07/20 01:21:06 by wkabat           ###   ########.fr       */
+/*   Updated: 2024/07/22 13:42:02 by wkabat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stddef.h>
-# include "minilibx/mlx.h"
-# include "minilibft/minilibft.h"
-// # include <X11/keysymdef.h>
+# include "minilibx-linux/mlx.h"
+# include "libft/libft.h"
 
 typedef struct s_comp
 {
@@ -105,7 +104,7 @@ void	count_collectibles(t_map_check *map);
 void	find_start(t_map_check *map);
 void	flood_fill(t_map_check *map, int x, int y);
 int		valid_path(t_map_check *map, t_comp *c);
-int		cross_clicked(t_mlx *mlx);
+int		cross_clicked(t_game *game);
 void	window_size(t_mlx *mlx, t_map_check *map);
 void	draw_map(t_mlx *mlx, t_map_check *map);
 void	get_sprite_position(t_map_check *map, t_mlx *mlx);
@@ -114,5 +113,8 @@ int		check_tale(t_map_check *map, t_mlx *mlx, int prev_x, int prev_y);
 void	check_keycode(int keycode, t_mlx *mlx);
 void	tiles(t_mlx *mlx, t_map_check *map, int x, int y);
 void	end_game(t_mlx *mlx, t_map_check *map);
+void	img_and_win(t_mlx *mlx);
+void	prepare_game(t_mlx *mlx, t_map_check *map);
+void	mlx_free(t_mlx *mlx);
 
 #endif
